@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/rest/users")
@@ -29,12 +30,12 @@ public class UsersResource {
     }
 
     @GetMapping("/id/{id}")
-    public Users getId(@PathVariable("id") final Integer id) {
+    public Users getId(@PathVariable("id") final UUID id) {
         return usersRepository.findOne(id);
     }
 
     @GetMapping("/update/{id}/{name}")
-    public Users update(@PathVariable("id") final Integer id, @PathVariable("name")
+    public Users update(@PathVariable("id") final UUID id, @PathVariable("name")
                          final String name) {
 
 

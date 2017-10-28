@@ -1,21 +1,36 @@
 package com.techprimers.jpa.springjpahibernateexample.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users", catalog = "test")
-public class Users {
+public class Users implements Serializable {
 
     @Id
+    private UUID uuid;
+
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "name")
     private String name;
+
     private Integer salary;
-    private String teamName;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "teams", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Collection<Team> teams;
+
+    public Collection<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Collection<Team> teams) {
+        this.teams = teams;
+    }
 
     public Users() {
     }
@@ -44,11 +59,13 @@ public class Users {
         this.salary = salary;
     }
 
-    public String getTeamName() {
-        return teamName;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
+
+
 }
